@@ -1,7 +1,42 @@
 <?php require "header/navbar.php" ?>
+
+<?php 
+
+if(isset($_POST['register'])){
+
+  $username = $_POST['username'];
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+ 
+  $sqlinsert = "INSERT INTO `register_user`(`user_name`, `user_email`, `user_password`, `created_at`)
+   VALUES (:username,:email,:password)";
+
+  $sqlprepare = $connection->prepare($sqlinsert);
+  
+  $sqlprepare->bindParam(':username',$username,PDO::PARAM_STR);
+  $sqlprepare->bindParam(':email',$email,PDO::PARAM_STR);
+  $sqlprepare->bindParam(':password',$password,PDO::PARAM_STR);
+  
+  $sqlprepare->execute();
+
+  header('location:login.php');
+
+}
+
+
+
+
+
+
+
+
+
+
+?>
+
     <!-- END nav -->
 
-    <section class="home-slider owl-carousel">
+    <section class="home-slider owl-carousel" action = "<?php $_SERVER['PHP_SELF']?>" method = "POST">
 
       <div class="slider-item" style="background-image: url(images/bg_2.jpg);" data-stellar-background-ratio="0.5">
       	<div class="overlay"></div>
@@ -10,7 +45,7 @@
 
             <div class="col-md-7 col-sm-12 text-center ftco-animate">
             	<h1 class="mb-3 mt-5 bread">Register</h1>
-	            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Register</span></p>
+	            <p class="breadcrumbs"><span class="mr-2"><a href="index.php">Home</a></span> <span>Register</span></p>
             </div>
 
           </div>
@@ -27,28 +62,28 @@
 	          	<div class="row align-items-end">
                  <div class="col-md-12">
                         <div class="form-group">
-                            <label for="Username">Username</label>
-                          <input type="text" class="form-control" placeholder="Username">
+                            <label for="">Username</label>
+                          <input type="text" class="form-control" placeholder="" name = "username" value = "username">
                         </div>
                  </div>
 	          	  <div class="col-md-12">
 	                <div class="form-group">
 	                	<label for="Email">Email</label>
-	                  <input type="text" class="form-control" placeholder="Email">
+	                  <input type="text" class="form-control" placeholder=""  name = "email" value = "email">
 	                </div>
 	              </div>
                  
 	              <div class="col-md-12">
 	                <div class="form-group">
 	                	<label for="Password">Password</label>
-	                    <input type="password" class="form-control" placeholder="Password">
+	                    <input type="password" class="form-control" placeholder=""  name = "password" value = "password">
 	                </div>
 
                 </div>
                 <div class="col-md-12">
                 	<div class="form-group mt-4">
 							<div class="radio">
-                                <button class="btn btn-primary py-3 px-4">Register</button>
+                                <button class="btn btn-primary py-3 px-4" name = "register" value = "register">Register</button>
 						    </div>
 					</div>
                 </div>
