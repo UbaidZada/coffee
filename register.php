@@ -1,33 +1,68 @@
 <?php require "header/navbar.php" ?>
-
+<?php
+ include('connection/connection.php');  
+?>
 <?php 
+
+$sqlfetch = "SELECT * FROM `register_user`";
+
+$fetchprepare = $connection->prepare($sqlfetch);
+
+$fetchprepare->execute();
+
+$fetch = $fetchprepare->fetchAll(PDO::FETCH_ASSOC);
+
+
+// print_r($fetch);
+
+
+
+
 
 if(isset($_POST['register'])){
 
   $username = $_POST['username'];
   $email = $_POST['email'];
   $password = $_POST['password'];
- 
-  $sqlinsert = "INSERT INTO `register_user`(`user_name`, `user_email`, `user_password`, `created_at`)
-   VALUES (:username,:email,:password)";
 
-  $sqlprepare = $connection->prepare($sqlinsert);
-  
-  $sqlprepare->bindParam(':username',$username,PDO::PARAM_STR);
-  $sqlprepare->bindParam(':email',$email,PDO::PARAM_STR);
-  $sqlprepare->bindParam(':password',$password,PDO::PARAM_STR);
-  
-  $sqlprepare->execute();
 
-  header('location:login.php');
+  foreach($fetch as $data){
+
+	if($password ==  $data['user_email'] && $password ==  $data['user_password']){
+
+      echo "<script>alert('email and password is alredy exists')</script>";
+
+	}else{
+
+
 
 }
 
+}
+		
+	
+}
+
+if(){
 
 
+	$hash_password = password_hash($password,PASSWORD_BCRYPT);
+ 
+	$sqlinsert = "INSERT INTO `register_user`(`user_name`, `user_email`, `user_password`)
+	 VALUES (:username,:email,:password)";
+  
+	$sqlprepare = $connection->prepare($sqlinsert);
+	
+	$sqlprepare->bindParam(':username',$username,PDO::PARAM_STR);
+	$sqlprepare->bindParam(':email',$email,PDO::PARAM_STR);
+	$sqlprepare->bindParam(':password',$hash_password,PDO::PARAM_STR);
+	
+	$sqlprepare->execute();
+  
+	header('location:login.php');
+  
 
-
-
+}
 
 
 
@@ -36,7 +71,7 @@ if(isset($_POST['register'])){
 
     <!-- END nav -->
 
-    <section class="home-slider owl-carousel" action = "<?php $_SERVER['PHP_SELF']?>" method = "POST">
+    <section class="home-slider owl-carousel">
 
       <div class="slider-item" style="background-image: url(images/bg_2.jpg);" data-stellar-background-ratio="0.5">
       	<div class="overlay"></div>
@@ -57,7 +92,7 @@ if(isset($_POST['register'])){
       <div class="container">
         <div class="row">
           <div class="col-md-12 ftco-animate">
-			<form action="#" class="billing-form ftco-bg-dark p-3 p-md-5">
+			<form action="<?php $_SERVER['PHP_SELF']?>" method = "POST" class="billing-form ftco-bg-dark p-3 p-md-5">
 				<h3 class="mb-4 billing-heading">Register</h3>
 	          	<div class="row align-items-end">
                  <div class="col-md-12">
@@ -83,7 +118,7 @@ if(isset($_POST['register'])){
                 <div class="col-md-12">
                 	<div class="form-group mt-4">
 							<div class="radio">
-                                <button class="btn btn-primary py-3 px-4" name = "register" value = "register">Register</button>
+                                <input type="submit" class="btn btn-primary py-3 px-4" name = "register" value = "Register">
 						    </div>
 					</div>
                 </div>

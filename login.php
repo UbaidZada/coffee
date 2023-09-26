@@ -1,4 +1,24 @@
+
 <?php require "header/navbar.php" ?>
+
+<?php
+ include('connection/connection.php');  
+?>
+
+<?php 
+
+$sqlfetch = "SELECT * FROM `register_user`";
+
+$fetchprepare = $connection->prepare($sqlfetch);
+
+$fetchprepare->execute();
+
+$fetch = $fetchprepare->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+?>
+
 
     <!-- END nav -->
 
@@ -11,7 +31,7 @@
 
             <div class="col-md-7 col-sm-12 text-center ftco-animate">
             	<h1 class="mb-3 mt-5 bread">Login</h1>
-	            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Login</span></p>
+	            <p class="breadcrumbs"><span class="mr-2"><a href="index.php">Home</a></span> <span>Login</span></p>
             </div>
 
           </div>
@@ -23,7 +43,7 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12 ftco-animate">
-			<form action="#" class="billing-form ftco-bg-dark p-3 p-md-5">
+			<form action="<?php $_SERVER['PHP_SELF']?>" method = "POST" class="billing-form ftco-bg-dark p-3 p-md-5">
 				<h3 class="mb-4 billing-heading">Login</h3>
 	          	<div class="row align-items-end">
 	          		<div class="col-md-12">
