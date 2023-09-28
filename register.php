@@ -16,34 +16,32 @@ $fetch = $fetchprepare->fetchAll(PDO::FETCH_ASSOC);
 // print_r($fetch);
 
 
-
-
-
 if(isset($_POST['register'])){
 
   $username = $_POST['username'];
   $email = $_POST['email'];
   $password = $_POST['password'];
 
+  $isEmailValid = false;
 
   foreach($fetch as $data){
 
-	if($password ==  $data['user_email'] && $password ==  $data['user_password']){
+	if($email ===  $data['user_email']){
 
-      echo "<script>alert('email and password is alredy exists')</script>";
-
+      echo "<script>alert('email is alredy exists')</script>";
+      return;
 	}else{
 
-
+		$isEmailValid = true;
 
 }
 
 }
 		
 	
-}
 
-if(){
+
+if($isEmailValid){
 
 
 	$hash_password = password_hash($password,PASSWORD_BCRYPT);
@@ -59,12 +57,12 @@ if(){
 	
 	$sqlprepare->execute();
   
-	header('location:login.php');
-  
+
+  header('location:login.php');
 
 }
 
-
+}
 
 
 ?>
@@ -92,33 +90,33 @@ if(){
       <div class="container">
         <div class="row">
           <div class="col-md-12 ftco-animate">
-			<form action="<?php $_SERVER['PHP_SELF']?>" method = "POST" class="billing-form ftco-bg-dark p-3 p-md-5">
+			<form action="<?php $_SERVER['PHP_SELF']?>" method = "post" class="billing-form ftco-bg-dark p-3 p-md-5">
 				<h3 class="mb-4 billing-heading">Register</h3>
 	          	<div class="row align-items-end">
                  <div class="col-md-12">
                         <div class="form-group">
                             <label for="">Username</label>
-                          <input type="text" class="form-control" placeholder="" name = "username" value = "username">
+                          <input type="text" class="form-control" placeholder="Username" name = "username" >
                         </div>
                  </div>
 	          	  <div class="col-md-12">
 	                <div class="form-group">
 	                	<label for="Email">Email</label>
-	                  <input type="text" class="form-control" placeholder=""  name = "email" value = "email">
+	                  <input type="text" class="form-control" placeholder="Email"  name = "email" >
 	                </div>
 	              </div>
                  
 	              <div class="col-md-12">
 	                <div class="form-group">
 	                	<label for="Password">Password</label>
-	                    <input type="password" class="form-control" placeholder=""  name = "password" value = "password">
+	                    <input type="password" class="form-control" placeholder="Password"  name = "password" >
 	                </div>
 
                 </div>
                 <div class="col-md-12">
                 	<div class="form-group mt-4">
 							<div class="radio">
-                                <input type="submit" class="btn btn-primary py-3 px-4" name = "register" value = "Register">
+                                <input type="submit" class="btn btn-primary py-3 px-4" name = "register">
 						    </div>
 					</div>
                 </div>

@@ -15,6 +15,36 @@ $fetchprepare->execute();
 
 $fetch = $fetchprepare->fetchAll(PDO::FETCH_ASSOC);
 
+//  print_r($fetch);
+
+if(isset($_POST['login'])){
+
+	$email = $_POST['email'];
+	$password = $_POST['password'];
+
+
+foreach($fetch as $data){
+
+	if($email ===  $data['user_email'] &&  password_verify($password,$data['user_password'])){
+
+        $_SESSION['userid'] = $data['user_id'];
+        $_SESSION['username'] = $data['user_name'];
+        $_SESSION['useremail'] = $data['user_email'];
+
+
+
+		header('location:index.php');
+		return;
+
+	}else{
+
+		echo "<script>alert('login UnSucceessfull')</script>";	
+
+}
+
+}
+
+}
 
 
 ?>
@@ -43,27 +73,27 @@ $fetch = $fetchprepare->fetchAll(PDO::FETCH_ASSOC);
       <div class="container">
         <div class="row">
           <div class="col-md-12 ftco-animate">
-			<form action="<?php $_SERVER['PHP_SELF']?>" method = "POST" class="billing-form ftco-bg-dark p-3 p-md-5">
+			<form action="<?php $_SERVER['PHP_SELF']?>" method = "post" class="billing-form ftco-bg-dark p-3 p-md-5">
 				<h3 class="mb-4 billing-heading">Login</h3>
 	          	<div class="row align-items-end">
 	          		<div class="col-md-12">
 	                <div class="form-group">
 	                	<label for="Email">Email</label>
-	                  <input type="text" class="form-control" placeholder="Email">
+	                  <input type="text" class="form-control" placeholder="Email" name  = "email">
 	                </div>
 	              </div>
                  
 	              <div class="col-md-12">
 	                <div class="form-group">
 	                	<label for="Password">Password</label>
-	                    <input type="password" class="form-control" placeholder="Password">
+	                    <input type="password" class="form-control" placeholder="Password" name = "password">
 	                </div>
 
                 </div>
                 <div class="col-md-12">
                 	<div class="form-group mt-4">
 							<div class="radio">
-                                <button class="btn btn-primary py-3 px-4">Login</button>
+                                <input type = "submit" class="btn btn-primary py-3 px-4" value="Login" name = "login" >
 						    </div>
 					</div>
                 </div>
