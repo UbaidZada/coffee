@@ -7,7 +7,14 @@
 
 <?php 
 
-$sqlfetch = "SELECT * FROM `register_user`";
+if(isset($_SESSION['username'])){
+
+	header('location:index.php');
+
+}else{
+
+
+	$sqlfetch = "SELECT * FROM `register_user`";
 
 $fetchprepare = $connection->prepare($sqlfetch);
 
@@ -22,6 +29,7 @@ if(isset($_POST['login'])){
 	$email = $_POST['email'];
 	$password = $_POST['password'];
 
+	$isloginNOTSuccessfull = false;
 
 foreach($fetch as $data){
 
@@ -33,18 +41,29 @@ foreach($fetch as $data){
 
 
 
-		header('location:index.php');
-		return;
-
 	}else{
 
-		echo "<script>alert('login UnSucceessfull')</script>";	
+		$isloginNOTSuccessfull = true;
+		
+		
+		
+	}
+	
+}
+
+	  if($isloginNOTSuccessfull){
+
+echo "<script>alert('login UnSucceessfull')</script>";
+
+	  }
 
 }
 
-}
+
 
 }
+
+
 
 
 ?>

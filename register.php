@@ -4,65 +4,77 @@
 ?>
 <?php 
 
-$sqlfetch = "SELECT * FROM `register_user`";
+if(isset($_SESSION['username'])){
 
-$fetchprepare = $connection->prepare($sqlfetch);
-
-$fetchprepare->execute();
-
-$fetch = $fetchprepare->fetchAll(PDO::FETCH_ASSOC);
+	header('location:login.php');
 
 
-// print_r($fetch);
+}else{
 
 
-if(isset($_POST['register'])){
+	$sqlfetch = "SELECT * FROM `register_user`";
 
-  $username = $_POST['username'];
-  $email = $_POST['email'];
-  $password = $_POST['password'];
-
-  $isEmailValid = false;
-
-  foreach($fetch as $data){
-
-	if($email ===  $data['user_email']){
-
-      echo "<script>alert('email is alredy exists')</script>";
-      return;
-	}else{
-
-		$isEmailValid = true;
-
-}
-
-}
+	$fetchprepare = $connection->prepare($sqlfetch);
+	
+	$fetchprepare->execute();
+	
+	$fetch = $fetchprepare->fetchAll(PDO::FETCH_ASSOC);
+	
+	
+	// print_r($fetch);
+	
+	
+	if(isset($_POST['register'])){
+	
+	  $username = $_POST['username'];
+	  $email = $_POST['email'];
+	  $password = $_POST['password'];
+	
+	  $isEmailValid = false;
+	
+	  foreach($fetch as $data){
+	
+		if($email ===  $data['user_email']){
+	
+		  echo "<script>alert('email is alredy exists')</script>";
+		  return;
+		}else{
+	
+			$isEmailValid = true;
+	
+	}
+	
+	}
+			
+	
+	
+	if($isEmailValid){
+	
+	
+		$hash_password = password_hash($password,PASSWORD_BCRYPT);
+	 
+		$sqlinsert = "INSERT INTO `register_user`(`user_name`, `user_email`, `user_password`)
+		 VALUES (:username,:email,:password)";
+	  
+		$sqlprepare = $connection->prepare($sqlinsert);
 		
+		$sqlprepare->bindParam(':username',$username,PDO::PARAM_STR);
+		$sqlprepare->bindParam(':email',$email,PDO::PARAM_STR);
+		$sqlprepare->bindParam(':password',$hash_password,PDO::PARAM_STR);
+		
+		$sqlprepare->execute();
+	  
+	
+	
+	}
+	
+	}
 	
 
-
-if($isEmailValid){
-
-
-	$hash_password = password_hash($password,PASSWORD_BCRYPT);
- 
-	$sqlinsert = "INSERT INTO `register_user`(`user_name`, `user_email`, `user_password`)
-	 VALUES (:username,:email,:password)";
-  
-	$sqlprepare = $connection->prepare($sqlinsert);
-	
-	$sqlprepare->bindParam(':username',$username,PDO::PARAM_STR);
-	$sqlprepare->bindParam(':email',$email,PDO::PARAM_STR);
-	$sqlprepare->bindParam(':password',$hash_password,PDO::PARAM_STR);
-	
-	$sqlprepare->execute();
-  
-
-  header('location:login.php');
 
 }
 
-}
+
 
 
 ?>
