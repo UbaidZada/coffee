@@ -5,6 +5,16 @@
 
   <?php
   
+//   View product start
+
+$productquery = "SELECT * FROM `products`";
+
+$productprepare = $connection->prepare($productquery);
+$productprepare->execute();
+
+$productData = $productprepare->fetchAll(PDO::FETCH_ASSOC);
+
+// print_r($productData);
  
  if(isset($_SESSION['userid'])){
 
@@ -34,11 +44,10 @@ $book_query = "INSERT INTO `booking`( `first_name`, `last_name`, `date`, `time`,
 
  }else{
 
-echo "<script>alert('')</script>"
+echo "<script>alert('Kindly login to book a Table')</script>";
 
 
  }
- 
  
  
  
@@ -133,7 +142,7 @@ echo "<script>alert('')</script>"
 	    		</div>
 	    		<div class="book p-4">
 	    			<h3>Book a Table</h3>
-	    			<form action="<?php $_SERVER['PHP_SELF'] ?>" class="appointment-form">
+	    			<form action="<?php $_SERVER['PHP_SELF'] ?>" method = "post class="appointment-form">
 	    				<div class="d-md-flex">
 		    				<div class="form-group">
 		    					<input type="text" name = "firstname" class="form-control" placeholder="First Name">
@@ -324,7 +333,7 @@ echo "<script>alert('')</script>"
           </div>
         </div>
         <div class="row">
-        	<div class="col-md-3">
+        	<!-- <div class="col-md-3">
         		<div class="menu-entry">
     					<a href="#" class="img" style="background-image: url(images/menu-1.jpg);"></a>
     					<div class="text text-center pt-4">
@@ -345,18 +354,31 @@ echo "<script>alert('')</script>"
     						<p><a href="#" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
     					</div>
     				</div>
-        	</div>
-        	<div class="col-md-3">
+        	</div> -->
+       
+
+
+           <?php
+		   
+		 foreach($productData as $data){
+		 
+		 
+		 ?>
+     	<div class="col-md-3"> 
         		<div class="menu-entry">
     					<a href="#" class="img" style="background-image: url(images/menu-3.jpg);"></a>
     					<div class="text text-center pt-4">
-    						<h3><a href="#">Coffee Capuccino</a></h3>
-    						<p>A small river named Duden flows by their place and supplies</p>
-    						<p class="price"><span>$5.90</span></p>
+    						<h3><a href="#"><?php echo $data['prod_name']?></a></h3>
+    						<p><?php echo $data['prod_description']?></p>
+    						<p class="price"><span>$<?php echo $data['prod_price']?></span></p>
     						<p><a href="#" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
     					</div>
     				</div>
         	</div>
+
+<?php   
+}
+?>
         	<div class="col-md-3">
         		<div class="menu-entry">
     					<a href="#" class="img" style="background-image: url(images/menu-4.jpg);"></a>
