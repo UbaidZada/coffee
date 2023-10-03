@@ -55,7 +55,9 @@ $book_query = "INSERT INTO `booking`(`first_name`, `last_name`, `date`, `time`, 
 }
 
 
- }else{
+ }
+ 
+ else{
 
 echo "<script>alert('Kindly login to book a Table')</script>";
 
@@ -374,7 +376,7 @@ echo "<script>alert('Kindly login to book a Table')</script>";
 		 ?>
      	<div class="col-md-3"> 
         		<div class="menu-entry">
-    					<a href="#" class="img" style="background-image: url(images/menu-3.jpg);"></a>
+    					<a href="#" class="img" style="background-image: url(images/<?php echo $data['prod_image'] ?>);"></a>
     					<div class="text text-center pt-4">
     						<h3><a href="#"><?php echo $data['prod_name']?></a></h3>
     						<p><?php echo $data['prod_description']?></p>
