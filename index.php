@@ -24,22 +24,35 @@ $productData = $productprepare->fetchAll(PDO::FETCH_ASSOC);
 if(isset($_POST['submit'])){
 
 
-$book_query = "INSERT INTO `booking`( `first_name`, `last_name`, `date`, `time`, `phone`, `message`, `availibility`, `user_id`)
- VALUES (:firstname, :lastname, :date, :time, :phone, :message, :avilibility, :userId,)";
- 
- $book_query = $connection->prepare($book_query);
+	$firstname = $_POST['firstname'];
+	$lastname = $_POST['lastname'];
+	$date = $_POST['date'];
+	$time = $_POST['time'];
+	$phone = $_POST['phone'];
+	$message = $_POST['message'];
+	$avilibility = 'Yes';
+	$userID = $_SESSION['userid'];
 
- $book_query->bindParam(':firstname' , $firstname);
- $book_query->bindParam(':lastname' , $lastname);
- $book_query->bindParam(':date' , $date);
- $book_query->bindParam(':time' , $time);
- $book_query->bindParam(':phone' , $phone);
- $book_query->bindParam(':message' , $message);
- $book_query->bindParam(':avilibility' , $avilibility);
- $book_query->bindParam(':userId' , $userId);
- $book_query->execute();
+
+
+
+$book_query = "INSERT INTO `booking`(`first_name`, `last_name`, `date`, `time`, `phone`, `message`, `availibility`, `user_id`)
+ VALUES (':firstname',':lastname',':date',':time','phone',':message',':availibility',':userId')";
+ 
+ $book_prepare = $connection->prepare($book_query);
+
+ $book_prepare->bindParam(':firstname' , $firstname);
+ $book_prepare->bindParam(':lastname' , $lastname);
+ $book_prepare->bindParam(':date' , $date);
+ $book_prepare->bindParam(':time' , $time);
+ $book_prepare->bindParam(':phone' , $phone);
+ $book_prepare->bindParam(':message' , $message);
+ $book_prepare->bindParam(':availibility' , $avilibility);
+ $book_prepare->bindParam(':userId' , $userID);
+ $book_prepare->execute();
 
 // Book a table end
+}
 
 
  }else{
@@ -51,12 +64,7 @@ echo "<script>alert('Kindly login to book a Table')</script>";
  
  
  
-}
- 
- 
- 
- 
- 
+
  
  
  ?>
@@ -142,7 +150,7 @@ echo "<script>alert('Kindly login to book a Table')</script>";
 	    		</div>
 	    		<div class="book p-4">
 	    			<h3>Book a Table</h3>
-	    			<form action="<?php $_SERVER['PHP_SELF'] ?>" method = "post class="appointment-form">
+	    			<form action="<?php $_SERVER['PHP_SELF'] ?>" method = "post" class="appointment-form">
 	    				<div class="d-md-flex">
 		    				<div class="form-group">
 		    					<input type="text" name = "firstname" class="form-control" placeholder="First Name">
@@ -333,7 +341,7 @@ echo "<script>alert('Kindly login to book a Table')</script>";
           </div>
         </div>
         <div class="row">
-        	<!-- <div class="col-md-3">
+         <!-- <div class="col-md-3">
         		<div class="menu-entry">
     					<a href="#" class="img" style="background-image: url(images/menu-1.jpg);"></a>
     					<div class="text text-center pt-4">
@@ -354,7 +362,7 @@ echo "<script>alert('Kindly login to book a Table')</script>";
     						<p><a href="#" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
     					</div>
     				</div>
-        	</div> -->
+        	</div>  -->
        
 
 
@@ -374,12 +382,12 @@ echo "<script>alert('Kindly login to book a Table')</script>";
     						<p><a href="#" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
     					</div>
     				</div>
-        	</div>
+        	</div> 
 
 <?php   
 }
 ?>
-        	<div class="col-md-3">
+        	<!-- <div class="col-md-3">
         		<div class="menu-entry">
     					<a href="#" class="img" style="background-image: url(images/menu-4.jpg);"></a>
     					<div class="text text-center pt-4">
@@ -389,7 +397,7 @@ echo "<script>alert('Kindly login to book a Table')</script>";
     						<p><a href="#" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
     					</div>
     				</div>
-        	</div>
+        	</div> -->
         </div>
     	</div>
     </section>

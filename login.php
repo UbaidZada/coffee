@@ -39,7 +39,7 @@ foreach($fetch as $data){
         $_SESSION['username'] = $data['user_name'];
         $_SESSION['useremail'] = $data['user_email'];
 
-
+        header('location:index.php');
 
 	}else{
 
