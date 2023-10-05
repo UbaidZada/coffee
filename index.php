@@ -16,7 +16,6 @@ $productData = $productprepare->fetchAll(PDO::FETCH_ASSOC);
 
 // print_r($productData);
  
- if(isset($_SESSION['userid'])){
 
 
 // Book a table start
@@ -31,10 +30,15 @@ if(isset($_POST['submit'])){
 	$phone = $_POST['phone'];
 	$message = $_POST['message'];
 	$avilibility = 'Yes';
-	$userID = $_SESSION['userid'];
+	@$userID = $_SESSION['userid'];
 
 
+	if(empty($firstname) || empty($lastname) || empty($date) || empty($time) || empty($phone) || empty($message)){
+		echo "<script>alert('Kindly fill all the feilds')</script>";
 
+	}else{
+
+		if(isset($userID)){
 
 $book_query = "INSERT INTO `booking`(`first_name`, `last_name`, `date`, `time`, `phone`, `message`, `availibility`, `user_id`)
  VALUES (':firstname',':lastname',':date',':time','phone',':message',':availibility',':userId')";
@@ -53,19 +57,22 @@ $book_query = "INSERT INTO `booking`(`first_name`, `last_name`, `date`, `time`, 
 
 // Book a table end
 }
+	
+else{
 
 
- }
- 
- else{
 
 echo "<script>alert('Kindly login to book a Table')</script>";
 
+ }
+ 
+
+
 
  }
  
  
- 
+}
 
  
  
@@ -381,7 +388,7 @@ echo "<script>alert('Kindly login to book a Table')</script>";
     						<h3><a href="#"><?php echo $data['prod_name']?></a></h3>
     						<p><?php echo $data['prod_description']?></p>
     						<p class="price"><span>$<?php echo $data['prod_price']?></span></p>
-    						<p><a href="#" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
+    						<p><a href="product-single.php?prodId=<?php echo $data['prod_id'] ?>" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
     					</div>
     				</div>
         	</div> 

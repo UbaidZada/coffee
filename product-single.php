@@ -1,5 +1,26 @@
 
-    <?php require "header/navbar.php" ?>
+<?php require "header/navbar.php" ?>
+<?php require "connection/connection.php" ?>
+
+
+<?php
+
+$id = $_GET['prodId'];
+
+$singleproductqurey =  "SELECT * FROM products WHERE prod_id = :id";
+
+
+$singleprepare = $connection->prepare($singleproductqurey);
+$singleprepare->bindParam(':id',$id);
+$singleprepare->execute();
+
+
+print_r($singleprepare);
+
+?>
+
+
+
 
 
 <!-- END nav -->
@@ -126,7 +147,7 @@
     	</div>
     </section>
 
-<?php require "header/navbar.php" ?>
+<?php require "header/footer.php" ?>
 
 
   <script>
