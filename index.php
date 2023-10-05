@@ -41,7 +41,7 @@ if(isset($_POST['submit'])){
 		if(isset($userID)){
 
 $book_query = "INSERT INTO `booking`(`first_name`, `last_name`, `date`, `time`, `phone`, `message`, `availibility`, `user_id`)
- VALUES (':firstname',':lastname',':date',':time','phone',':message',':availibility',':userId')";
+ VALUES (':firstname',':lastname',':date',':time',':phone',':message',':availibility',':userId')";
  
  $book_prepare = $connection->prepare($book_query);
 
@@ -86,7 +86,7 @@ echo "<script>alert('Kindly login to book a Table')</script>";
           <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
 
             <div class="col-md-8 col-sm-12 text-center ftco-animate">
-            	<span class="subheading">Welcome</span>
+            	<span class="subheading">Wellcome</span>
               <h1 class="mb-4">The Best Coffee Testing Experience</h1>
               <p class="mb-4 mb-md-5">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
               <p><a href="#" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="#" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>

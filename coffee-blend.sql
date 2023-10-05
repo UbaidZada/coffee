@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2023 at 08:46 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.0.28
+-- Generation Time: Oct 05, 2023 at 05:55 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,13 +31,20 @@ CREATE TABLE `booking` (
   `id` int(11) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(200) NOT NULL,
-  `date` int(50) NOT NULL,
-  `time` int(50) NOT NULL,
-  `phone` int(50) NOT NULL,
+  `date` varchar(50) NOT NULL,
+  `time` varchar(50) NOT NULL,
+  `phone` bigint(50) NOT NULL,
   `message` text NOT NULL,
   `availibility` varchar(255) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `booking`
+--
+
+INSERT INTO `booking` (`id`, `first_name`, `last_name`, `date`, `time`, `phone`, `message`, `availibility`, `user_id`) VALUES
+(2, 'Ammad', 'zada', '10/25/2023', '12:00am', 3491861238, 'fhf', 'Yes', 2);
 
 -- --------------------------------------------------------
 
@@ -50,26 +57,27 @@ CREATE TABLE `products` (
   `prod_name` varchar(255) NOT NULL,
   `prod_description` varchar(200) NOT NULL,
   `prod_price` float NOT NULL,
-  `prod_image` varchar(50) NOT NULL
+  `prod_image` varchar(50) NOT NULL,
+  `type` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`prod_id`, `prod_name`, `prod_description`, `prod_price`, `prod_image`) VALUES
-(2, 'Coconut Mocha', 'A tropical twist on the mocha, combining espresso, rich cocoa, and coconut milk.\r\n', 5.45, 'menu-2'),
-(3, 'Espresso Shot\r\n\r\n\r\n', 'A single, strong shot of pure espresso, perfect for those who crave intense coffee flavour.', 3.25, 'menu-1'),
-(4, 'Cappuccino Delight\r\n\r\n', 'A classic Italian favourite, featuring equal parts espresso, steamed milk, and frothy milk foam.\r\n', 4.5, 'menu-3'),
-(5, 'Mocha Madness\r\n\r\n\r\n', 'A decadent blend of espresso, rich cocoa, and steamed milk, topped with whipped cream.', 3.5, 'menu-4'),
-(6, 'Cold Brew Bliss\r\n\r\n\r\n', 'Smooth and refreshing, this cold brew coffee is brewed for hours and served over ice.', 5.25, 'menu-2'),
-(7, 'Vanilla Latte\r\n\r\n\r\n', 'Creamy latte with a hint of sweet vanilla syrup, balanced with espresso and steamed milk.', 4.75, 'menu-1'),
-(8, 'Iced Caramel Macchiato\r\n\r\n\r\n', 'A delightful combination of iced milk, espresso, and caramel drizzle.', 5, 'menu-3'),
-(9, 'Hazelnut Heaven\r\n\r\n\r\n', 'A nutty twist on a latte, featuring hazelnut syrup, espresso, and frothy milk.', 4.75, 'menu-4'),
-(10, 'Pumpkin Spice Latte\r\n\r\n\r\n', 'Fall\'s favourite, with espresso, steamed milk, pumpkin spice syrup, and whipped cream.', 3.5, 'menu-2'),
-(11, 'Irish Coffee\r\n\r\n\r\n', 'A classic cocktail made with hot coffee, Irish whiskey, sugar, and topped with whipped cream.', 2.72, 'menu-1'),
-(12, 'Cinnamon Roll Coffee\r\n\r\n \r\n', 'A comforting blend of cinnamon-infused coffee, frothy milk, and a sprinkle of cinnamon sugar.', 3.25, 'menu-3'),
-(13, 'Coconut Mocha\r\n\r\n\r\n', 'A tropical twist on the mocha, combining espresso, rich cocoa, and coconut milk.', 5.45, 'menu-4');
+INSERT INTO `products` (`prod_id`, `prod_name`, `prod_description`, `prod_price`, `prod_image`, `type`) VALUES
+(2, 'Coconut Mocha', 'A tropical twist on the mocha, combining espresso, rich cocoa, and coconut milk.\r\n', 5.45, 'menu-1.JPG', 'Espresso'),
+(3, 'Espresso Shot\r\n\r\n\r\n', 'A single, strong shot of pure espresso, perfect for those who crave intense coffee flavour.', 3.25, 'menu-2.JPG', 'Cappuccino'),
+(4, 'Cappuccino Delight\r\n\r\n', 'A classic Italian favourite, featuring equal parts espresso, steamed milk, and frothy milk foam.\r\n', 4.5, 'menu-3.JPG', 'Coffee Arabia'),
+(5, 'Mocha Madness\r\n\r\n\r\n', 'A decadent blend of espresso, rich cocoa, and steamed milk, topped with whipped cream.', 3.5, 'menu-4.JPG', 'Turkish Coffee'),
+(6, 'Cold Brew Bliss\r\n\r\n\r\n', 'Smooth and refreshing, this cold brew coffee is brewed for hours and served over ice.', 5.25, 'menu-1.JPG', 'Espresso'),
+(7, 'Vanilla Latte\r\n\r\n\r\n', 'Creamy latte with a hint of sweet vanilla syrup, balanced with espresso and steamed milk.', 4.75, 'menu-2.JPG', 'Cappuccino'),
+(8, 'Iced Caramel Macchiato\r\n\r\n\r\n', 'A delightful combination of iced milk, espresso, and caramel drizzle.', 5, 'menu-3.JPG', 'Coffee Arabia'),
+(9, 'Hazelnut Heaven\r\n\r\n\r\n', 'A nutty twist on a latte, featuring hazelnut syrup, espresso, and frothy milk.', 4.75, 'menu-4.JPG', 'Turkish Coffee'),
+(10, 'Pumpkin Spice Latte\r\n\r\n\r\n', 'Fall\'s favourite, with espresso, steamed milk, pumpkin spice syrup, and whipped cream.', 3.5, 'menu-1.JPG', 'Espresso'),
+(11, 'Irish Coffee\r\n\r\n\r\n', 'A classic cocktail made with hot coffee, Irish whiskey, sugar, and topped with whipped cream.', 2.72, 'menu-2.JPG', 'Cappuccino'),
+(12, 'Cinnamon Roll Coffee\r\n\r\n \r\n', 'A comforting blend of cinnamon-infused coffee, frothy milk, and a sprinkle of cinnamon sugar.', 3.25, 'menu-3.JPG', 'Coffee Arabia'),
+(13, 'Coconut Mocha\r\n\r\n\r\n', 'A tropical twist on the mocha, combining espresso, rich cocoa, and coconut milk.', 5.45, 'menu-4.JPG', 'Turkish Coffee');
 
 -- --------------------------------------------------------
 
@@ -125,7 +133,7 @@ ALTER TABLE `register_user`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -147,7 +155,7 @@ ALTER TABLE `register_user`
 -- Constraints for table `booking`
 --
 ALTER TABLE `booking`
-  ADD CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `booking` (`id`);
+  ADD CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `register_user` (`user_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

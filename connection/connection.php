@@ -1,10 +1,10 @@
 <?php
 
-$connection = new PDO("mysql:host=localhost;dbname=coffee-blend","root","");
 
 
 try{
-
+    
+    $connection = new PDO("mysql:host=localhost;dbname=coffee-blend","root","");
 // echo "database is connected";
 
 }catch(PDOExpection){
