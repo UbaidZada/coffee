@@ -29,7 +29,7 @@ if(isset($_POST['submit'])){
 	$time = $_POST['time'];
 	$phone = $_POST['phone'];
 	$message = $_POST['message'];
-	$avilibility = 'Yes';
+	$availibility = 'Yes';
 	@$userID = $_SESSION['userid'];
 
 
@@ -51,7 +51,7 @@ $book_query = "INSERT INTO `booking`(`first_name`, `last_name`, `date`, `time`, 
  $book_prepare->bindParam(':time' , $time);
  $book_prepare->bindParam(':phone' , $phone);
  $book_prepare->bindParam(':message' , $message);
- $book_prepare->bindParam(':availibility' , $avilibility);
+ $book_prepare->bindParam(':availibility' , $availibility);
  $book_prepare->bindParam(':userId' , $userID);
  $book_prepare->execute();
 

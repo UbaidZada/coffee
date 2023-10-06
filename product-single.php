@@ -14,7 +14,7 @@ $singleprepare = $connection->prepare($singleproductqurey);
 $singleprepare->bindParam(':id',$id);
 $singleprepare->execute();
 
- $fetch=$singleprepare->fetch(PDO::FETCH_ASSOC);
+ $fetch = $singleprepare->fetch(PDO::FETCH_ASSOC);
 // print_r($fetch);
 
 
@@ -117,7 +117,7 @@ print_r($fetchrelated);
           </div>
         </div>
         <div class="row">
-        	<div class="col-md-3">
+        	<!-- <div class="col-md-3">
         		<div class="menu-entry">
     					<a href="#" class="img" style="background-image: url(images/menu-1.jpg);"></a>
     					<div class="text text-center pt-4">
@@ -149,7 +149,13 @@ print_r($fetchrelated);
     						<p><a href="#" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
     					</div>
     				</div>
-        	</div>
+        	</div> -->
+
+<?php
+
+foreach($fetchrelated as $related){
+
+?>
         	<div class="col-md-3">
         		<div class="menu-entry">
     					<a href="#" class="img" style="background-image: url(images/menu-4.jpg);"></a>
@@ -161,6 +167,9 @@ print_r($fetchrelated);
     					</div>
     				</div>
         	</div>
+
+<?php    }  ?>
+
         </div>
     	</div>
     </section>
