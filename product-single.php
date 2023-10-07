@@ -34,6 +34,65 @@ $fetchrelated = $relatedprepare->fetchAll(PDO::FETCH_ASSOC);
 
 //  related products end
 
+// Add to card start
+
+
+if(isset($_POST['cart_submit'])){
+
+
+if(isset($_SESSION['userid'])){
+
+
+$price = $_POST['inputPrice'];
+@$size = $_POST['size'];
+$quantity = $_POST['quantity'];
+
+$cart_insert_query = "INSERT INTO `cart`(`prod_name`, `prod_price`, `prod_description`, `quantity`, `size`, `prod_image`, `prod_id`, `user_id`) VALUES (:prodname, :prodprice, :prodDescription, :quantity, :size, :prodimage, :pridId, :userId)";
+
+
+$cart_prepare = $connection->prepare($cart_insert_query);
+
+$cart_prepare->bindParam(':prodname',$fetch['prod_name']);
+$cart_prepare->bindParam(':prodprice',$price);
+$cart_prepare->bindParam(':prodDescription',$fetch['prod_description']);
+$cart_prepare->bindParam(':quantity',$quantity);
+$cart_prepare->bindParam(':size',$size);
+$cart_prepare->bindParam(':prodimage',$fetch['prod_image']);
+$cart_prepare->bindParam(':prodId',$prodId);
+$cart_prepare->bindParam(':userId',$_SESSION['userid']);
+
+
+$cart_prepare->execute();
+
+
+}else{
+
+	echo "<script>alert('Kindly login to add to cart your product')</script>";
+
+}
+
+
+}
+
+
+
+// Add to card end
+
+
+
+// cart data start
+
+$cart_fetch_query = "SELECT * FROM cart where prod_id = :prodId";
+
+$cart_prepare = $connection->prepare($cart_fetch_query);
+$cart_prepare->bindParam(':prodId', $id);
+$cart_prepare->execute();
+
+$cart_Data = $cart_prepare->fetch(PDO::FETCH_ASSOC);
+
+// cart data end
+
+
 
 
 ?>
@@ -75,7 +134,7 @@ $fetchrelated = $relatedprepare->fetchAll(PDO::FETCH_ASSOC);
 						<div class="row mt-4">
 							<div class="col-md-6">
 								<div class="form-group d-flex">
-			<form action="product-single.php?prodId=<?php echo $single ?>" method = "post" >
+			<form action="product-single.php?prodId=<?php echo $fetch['prod_id'] ?>" method = "post" >
 
 		              <div class="select-wrap">
 	                  <div class="icon"><span class="ion-ios-arrow-down"></span></div>
@@ -104,11 +163,25 @@ $fetchrelated = $relatedprepare->fetchAll(PDO::FETCH_ASSOC);
 	          	</div>
           	</div>
 
+			<?php   
+			if(is_array($cart_Data)){
+			
+			if(is_array($cart_Data['prod_id']) === $fetch['prod_id']) {?>
+			
+				<p>Already added in the Cart</p>
+			<?php
 
-            <input type="hidden" value = "" name = "inputPrice">
+			}}
+
+			else{
+			?>
+
+            <input type="hidden" value = "<?php echo $fetch['prod_price']?>" name = "inputPrice">
           	<p><input type = "submit" value = "Add to Cart" name = "cart_submit" class="btn btn-primary py-3 px-5"></p>
 
 			  </form>
+
+			  <?php   } ?>
     			</div>
     		</div>
     	</div>
@@ -232,21 +305,25 @@ console.log(productSize.value);
 
 if(productSize.value == 'small'){
 prodPrice.innerHTML = '$<?php echo $fetch['prod_price'] ?>';
+inputPrice.value = '<?php echo $fetch['prod_price'] ?>';
 
 }
 
 if(productSize.value == 'medium'){
 prodPrice.innerHTML = '$<?php echo $fetch['prod_price'] +2.5 ?>';
+inputPrice.value = '<?php echo $fetch['prod_price'] ?>';
 
 }
 
 if(productSize.value == 'large'){
 prodPrice.innerHTML = '$<?php echo $fetch['prod_price'] +4.5 ?>';
+inputPrice.value = '<?php echo $fetch['prod_price'] ?>';
 
 }
 
 if(productSize.value == 'extra large'){
 prodPrice.innerHTML = '$<?php echo $fetch['prod_price'] +6.5 ?>';
+inputPrice.value = '<?php echo $fetch['prod_price'] ?>';
 
 }
 
