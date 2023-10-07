@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 05, 2023 at 05:55 PM
+-- Generation Time: Oct 07, 2023 at 01:52 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -33,7 +33,7 @@ CREATE TABLE `booking` (
   `last_name` varchar(200) NOT NULL,
   `date` varchar(50) NOT NULL,
   `time` varchar(50) NOT NULL,
-  `phone` bigint(50) NOT NULL,
+  `phone` bigint(20) NOT NULL,
   `message` text NOT NULL,
   `availibility` varchar(255) NOT NULL,
   `user_id` int(11) NOT NULL
@@ -44,7 +44,26 @@ CREATE TABLE `booking` (
 --
 
 INSERT INTO `booking` (`id`, `first_name`, `last_name`, `date`, `time`, `phone`, `message`, `availibility`, `user_id`) VALUES
-(2, 'Ammad', 'zada', '10/25/2023', '12:00am', 3491861238, 'fhf', 'Yes', 2);
+(2, 'Ammad', 'zada', '10/25/2023', '12:00am', 3491861238, 'fhf', 'Yes', 2),
+(3, 'Ammad', 'Zada', '10/8/2023', '1:00am', 3491861238, 'ws', 'Yes', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `cart_id` int(11) NOT NULL,
+  `prod_name` varchar(200) NOT NULL,
+  `prod_price` bigint(20) NOT NULL,
+  `prod_description` varchar(200) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `size` varchar(200) NOT NULL,
+  `prod_image` varchar(200) NOT NULL,
+  `prod_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -114,6 +133,14 @@ ALTER TABLE `booking`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`cart_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `prod_id` (`prod_id`);
+
+--
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
@@ -133,7 +160,13 @@ ALTER TABLE `register_user`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -156,6 +189,13 @@ ALTER TABLE `register_user`
 --
 ALTER TABLE `booking`
   ADD CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `register_user` (`user_id`);
+
+--
+-- Constraints for table `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `register_user` (`user_id`),
+  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`prod_id`) REFERENCES `products` (`prod_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

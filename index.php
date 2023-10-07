@@ -30,7 +30,7 @@ if(isset($_POST['submit'])){
 	$phone = $_POST['phone'];
 	$message = $_POST['message'];
 	$availibility = 'Yes';
-	@$userID = $_SESSION['userid'];
+	$userID = $_SESSION['userid'];
 
 
 	if(empty($firstname) || empty($lastname) || empty($date) || empty($time) || empty($phone) || empty($message)){
@@ -41,19 +41,21 @@ if(isset($_POST['submit'])){
 		if(isset($userID)){
 
 $book_query = "INSERT INTO `booking`(`first_name`, `last_name`, `date`, `time`, `phone`, `message`, `availibility`, `user_id`)
- VALUES (':firstname',':lastname',':date',':time',':phone',':message',':availibility',':userId')";
+ VALUES (:firstname,:lastname,:date,:time,:phone,:message,:availibility,:userId)";
  
  $book_prepare = $connection->prepare($book_query);
 
- $book_prepare->bindParam(':firstname' , $firstname);
- $book_prepare->bindParam(':lastname' , $lastname);
- $book_prepare->bindParam(':date' , $date);
- $book_prepare->bindParam(':time' , $time);
- $book_prepare->bindParam(':phone' , $phone);
- $book_prepare->bindParam(':message' , $message);
- $book_prepare->bindParam(':availibility' , $availibility);
- $book_prepare->bindParam(':userId' , $userID);
+ $book_prepare->bindParam(':firstname', $firstname);
+ $book_prepare->bindParam(':lastname', $lastname);
+ $book_prepare->bindParam(':date', $date);
+ $book_prepare->bindParam(':time', $time);
+ $book_prepare->bindParam(':phone', $phone);
+ $book_prepare->bindParam(':message', $message);
+ $book_prepare->bindParam(':availibility', $availibility);
+ $book_prepare->bindParam(':userId', $userID);
  $book_prepare->execute();
+
+// echo $userID;
 
 // Book a table end
 }
@@ -388,7 +390,7 @@ echo "<script>alert('Kindly login to book a Table')</script>";
     						<h3><a href="#"><?php echo $data['prod_name']?></a></h3>
     						<p><?php echo $data['prod_description']?></p>
     						<p class="price"><span>$<?php echo $data['prod_price']?></span></p>
-    						<p><a href="product-single.php?prodId=<?php echo $data['prod_id'] ?>" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
+    						<p><a href="product-single.php?prodId=<?php echo $data['prod_id'] ?>" class="btn btn-primary btn-outline-primary">View</a></p>
     					</div>
     				</div>
         	</div> 
