@@ -44,10 +44,11 @@ if(isset($_SESSION['userid'])){
 
 
 $price = $_POST['inputPrice'];
-@$size = $_POST['size'];
+@$Size = $_POST['size'];
 $quantity = $_POST['quantity'];
 
-$cart_insert_query = "INSERT INTO `cart`(`prod_name`, `prod_price`, `prod_description`, `quantity`, `size`, `prod_image`, `prod_id`, `user_id`) VALUES (:prodname, :prodprice, :prodDescription, :quantity, :size, :prodimage, :pridId, :userId)";
+$cart_insert_query = "INSERT INTO `cart`(`prod_name`, `prod_price`, `prod_description`, `quantity`, `size`, `prod_image`, `prod_id`, `user_id`)
+ VALUES (:prodname, :prodprice, :prodDescription, :quantity, :size, :prodimage, :prodId, :userId)";
 
 
 $cart_prepare = $connection->prepare($cart_insert_query);
@@ -56,9 +57,9 @@ $cart_prepare->bindParam(':prodname',$fetch['prod_name']);
 $cart_prepare->bindParam(':prodprice',$price);
 $cart_prepare->bindParam(':prodDescription',$fetch['prod_description']);
 $cart_prepare->bindParam(':quantity',$quantity);
-$cart_prepare->bindParam(':size',$size);
+$cart_prepare->bindParam(':size',$Size);
 $cart_prepare->bindParam(':prodimage',$fetch['prod_image']);
-$cart_prepare->bindParam(':prodId',$prodId);
+$cart_prepare->bindParam(':prodId',$id);
 $cart_prepare->bindParam(':userId',$_SESSION['userid']);
 
 
@@ -138,7 +139,7 @@ $cart_Data = $cart_prepare->fetch(PDO::FETCH_ASSOC);
 
 		              <div class="select-wrap">
 	                  <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-	                  <select name="" id="product_size" class="form-control">
+	                  <select name="size" id="product_size" class="form-control">
 	                  	<option value="small">Small</option>
 	                    <option value="medium">Medium</option>
 	                    <option value="large">Large</option>
